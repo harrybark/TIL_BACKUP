@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/jpashop;
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      # 어플리케이션 실행 시점에 테이블 모두 새로 생성
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+# log 출력
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type : trace

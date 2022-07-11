@@ -90,6 +90,54 @@ em.close();
 ```
 
 
+* * * 
+
+## 앤티티와 매핑
+
+### 객체와 테이블 매핑
+- 객체와 테이블 매핑 : `@Entity`, `@Table`
+`@Entity`
+: JPA가 관리하는 엔티티
+: JPA를 사용패서 테이블과 매핑할 클래스는 필수
+* 주의 
+JPA스펙상 기본 생성자는 있어야 함.(public or protected)
+final class, enum, interface, inner class 사용불가
+저장할 필드에 final 사용 금지 
+#### 속성
+- name 
+JPA에서 사용할 엔티티 이름 지정
+기본 값 : 클래스 이름
+같은 클래스 이름이 없으면 가급적 기본값 사용
+
+`@Table`
+엔티티와 매핑할 테이블 지정
+
+- 필드와 컬럼 매핑 : `@Column`
+- 기본 키 매핑 : `@Id`
+- 연관관계 매핑 : `@ManyToOne`n `@JoinColumn`
+
+### 데이터베이스 스키마 자동 생성
+DDL을 어플리케이션 실행 시점에 자동 생성
+테이블 중심 -> 객체 중심
+데이터베이스 방언을 활용해서 데이터베이스에 맞는 적절한 DDL 생성
+운영에서는 사용X(개발 단계에서만 사용)
+
+hibernate.hbm2ddl.auto 
+- create : 기존 테이블 삭제 후 생성(drop + create)
+- create-drop : 종료 시점에 drop
+- update : 변경분만 반영(컬럼 삭제는 불가능)
+- validate : 엔티티와 테이블이 정상 매핑되었는지만 확인
+- none : 사용하지 않음
+
+* 주의 
+운영장비에는 절대 create, create-drop, update사용하면 안됨.
+개발 초기에는 create / update
+테스트 서버는 update / validate
+스테이징과 운영 서버는 validate / none
+
+DDL 생성 기능
+: 런타임 중에 영향(JPA의 실행 로직에 영향)을 주는 것이 아니라 DB에 영향을 줌
+
 
 
 

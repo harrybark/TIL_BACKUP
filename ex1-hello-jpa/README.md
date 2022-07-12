@@ -138,6 +138,34 @@ hibernate.hbm2ddl.auto
 DDL 생성 기능
 : 런타임 중에 영향(JPA의 실행 로직에 영향)을 주는 것이 아니라 DB에 영향을 줌
 
+### 필드와 컬럼 매핑
+`@Column`
+name : 필드와 매핑할 테이블의 컬럼이름
+insertable, updateable : 등록, 변경가능 여부
+nullable : null값의 허용 여부 
+unique : 유니크 제약 조건
+columnDefinition : 컬럼 정의를 직접하고 싶은 경우(varchar(100) default 'EMPTY')
+length : 문자 길이 제약 조건, String 타입에만 사용
+precision scale : BigDecimal, BigInteger 타입에서 사용.
+
+`@Enumerated`
+Enum타입 매핑할 때 사용
+Default == ORDINAL
+EnumType.ORDINAL : 순서를 저장(문자X)
+EnumType.STRING  : 이름을 저장
+
+`@Temporal`
+java.util.Date, java.util.Calendar를 매핑할 때 사용
+java8이후는 LocalDateTime을 지원하기 때문에 @Temporal을 사용하지 않아도 무방함.
+
+`@Lob`
+지정 가능한 속성은 별도로 없음.
+매핑하는 타입이 문자면 CLOB
+나머지는 BLOB
+
+`@Transient`
+필드와 매핑하지 않는 경우 사용
+
 
 
 

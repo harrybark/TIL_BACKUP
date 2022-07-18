@@ -249,6 +249,192 @@ insert
 - 객체는 참조로 연관된 객체를 찾는다.
 
 ### 단방향 연관관계 
+### 단방향 
+: 2개의 객체 중 한 쪽만 참조하는 관계
+👉 [회원 → 팀] 또는 [팀 → 회원]
+### 양방향 
+: 2개의 객체가 서로를 참조하는 관게
+👉 [회원 → 팀] 그리고 [팀 → 회원]
+
+객체는 가급적이면 단방향이 좋다.
+
+### 연관관계의 주인과 mappedBy 
+객체와 테이블이 관계를 맺는 차이
+- 객체 연관관계 = 2개
+회원 -> 팀
+팀 -> 회원
+각각의 단방향 연관관계 2개
+
+- 테이블 연관관계 = 1개 (PFK)
+회원 <-> 팀 (양방향)
+
+즉, 객체의 양방향 관계는 사실 양방향 관계가 아니라 서로 다른 양방향 관계 2개인 것이다.
+객체를 양방향으로 참조하려면 <STRONG>단방향 연관관계</STRONG>를 2개 만들어야 한다.
+테이블은 <STRONG>외래 키</STRONG> 하나로 두 테이블의 연관관계를 관리한다.
+
+#### 양방향 매핑 규칙
+- 객체의 두 관계중 하나를 연관관계의 주인으로 지정
+- 연관관계의 주인만이 외래키를 관리(등록, 수정)
+- `주인이 아닌쪽은 읽기만 가능하다.`
+- 주인은 mappedBy 속성 사용 안함.
+- 주인이 아니면 mappedBy 속성으로 주인 지정.
+
+** 연관관계의 주인을 누구로 설정할 것인가 ? 
+- 외래 키가 있는 곳을 주인으로 지정
+비즈니스 로직 기준으로 하면 안된다. 외래 키의 위치를 기준으로 해야 한다.
+
+#### 양방향 매핑시 빈번한 실수
+- 연관관계의 주인에 값을 입력하지 않음.(member의 team은 null)
+```java
+Team team = new Team();
+team.setName("TEAMA");
+
+em.persist(team);
+
+Member member = new Member();
+member.setUsername("Harry Park");
+team.getMembers().add(member);
+
+em.persist(member);
+```
+
+- 순수한 객체 관계를 고려하면 양쪽 다 값을 입력해야 한다.
+```java
+Team team = new Team();
+team.setName("TEAMA");
+em.persist(team);
+
+Member member = new Member();
+member.setUsername("Harry Park");
+
+// 양쪽 다 값 설정
+member.setTeam(team);
+team.getMembers().add(member);
+
+em.persist(member);
+```
+
+🚨 추천내용
+1. 순수한 객체 관계를 고려하면 양쪽 다 값을 입력
+2. 연관관계 편의 메소드를 사용
+3. 양방향 매핑시 무한 루프를 조심
+예) toString(), lombok, JSON 생성 라이브러리
+
+
+## 다양한 연관관계 매핑
+고려해야할 사항 
+1. 다중성
+2. 단방향, 양방향
+- 테이블 
+: 외래 키 하나로 양쪽 조인 가능
+: 방향이라는 개념 없음
+- 객체
+: 참조용 필드가 있는 쪽으로만 참조 가능
+: 한쪽만 참조하면 단방향
+: 양쪽 서로 참조하면 양방향
+
+3. 연관관계의 주인
+주인 : 외래 키를 관리하는 참조
+주인 반대편 : 외래 키에 영향 X, 단순 조회만
+
+### 다대일[N:1] - @ManyToOne
+가장 많이 사용하는 연관관계(반대는 일대다)
+- 단방향
+```java
+...
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
+...
+```
+- 양방향
+테이블에는 영향을 주는 것이 아니고 객체관의 관계만 생성됨
+```java
+public class Member {
+...
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
+...
+}
+public class Team {
+...
+    @OneToMany(mappedBy = "team")
+    private List<Member> members = new ArrayList<>();
+...
+}
+```
+
+### 일대다[1:N] - @OneToMany
+- 단방향
+일대다 단방향은 1이 연관관계의 주인이다.
+테이블 일대다 관계는 항상 다 쪽에 외래키가 있다.
+객체는 테이블의 반대에서 외래 키를 관리한다는 특징이 있다.
+@JoinColumn을 넣어주어야 함. 생략되면 default @JoinTable
+```java
+public class Team {
+	@OneToMany
+    @JoinColumn(name = "TEAM_ID")
+    private List<Member> members = new ArrayList<>();
+
+    public List<Member> getMembers() {
+        return members;
+    }
+}    
+```
+
+단점 
+엔티티가 관리하는 외래 키가 다른 테이블에 있다.
+연관관계 관리를 위해 추가로 UPDATE SQL이 실행됨.
+
+! 다대일 양방향 매핑을 사용하는 것이 설계의 관점에서 떨어지더라도 유지 보수성에서 좋다.
+
+- 양방향
+일대다 양방향 매핑은 존재하지 않는다.(🚨 실무 사용 금지 ❌)
+@JoinColumn(updatable = false, insertable = false) 키워드만 추가 된다.
+
+```java
+public class Member {
+...
+	@ManyToOne
+	// 읽기 전용 설정
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+    private Team team;
+...
+}
+
+public class Team {
+	@OneToMany
+    @JoinColumn(name = "TEAM_ID")
+    private List<Member> members = new ArrayList<>();
+
+    public List<Member> getMembers() {
+        return members;
+    }
+}    
+```
+### 일대일[1:1] - @OneToOne
+일대일 관계는 그 반대도 일대일
+주 테이블이나 대상 테이블 중 외래 키 선택 가능
+- 주 테이클에 외래 키
+: 주 객체가 대상 객체의 참조를 가지는 것처럼 주 테이블에 외래 키를 두고 대상 테이블을 찾는다.
+: 객체지향 개발자 선호
+: JPA 매핑 편리
+* 장점 : 주 테이블만 조회해도 대상 테이블에 데이터가 있는지 확인이 가능
+* 단점 : 값이 없으면 외래 키에 null이 허용된다.
+
+- 대상 테이블에 외래 키
+: 대상 테이블에 외래 키가 존재
+: 전통적인 데이터베이스 개발자 선호
+* 장점 : 주 테이블과 대상 테이블을 일대일에서 일대다 관계로 변경할 때 테이블 구조가 유지된다.
+* 단점 : 프록시 기능의 한계로 지연 로딩으로 설정해도 항상 즉시 로딩된다.
+
+외래 키에 데이터베이스 유니크(UNIQUE) 제약조건 추가
+
+### 다대다[N:N] - @ManyToMany
+: 실무에서 사용안하는 것 권장
+
+
 
 
 

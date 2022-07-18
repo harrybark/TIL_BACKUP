@@ -16,46 +16,28 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();;
 
-        //try {
-            Team team = new Team();
-            team.setName("TEAMA");
-            em.persist(team);
+        Team team = new Team();
+        team.setName("TEAMA");
+        em.persist(team);
 
-            Member member = new Member();
-            //member.setId(1L);
-            member.setUsername("Harry Park");
-            member.setTeam(team);
-            em.persist(member);
+        Member member = new Member();
+        member.setUsername("Harry Park");
+        member.setTeam(team);
+        em.persist(member);
 
-            em.flush();
-            em.clear();
+        em.flush();
+        em.clear();
 
         Member findMember = em.find(Member.class, member.getId());
         Team findTeam = findMember.getTeam();
         System.out.println("findTeam : " + findTeam.getName());
-        tx.commit();
-            /*
-            Member findMember = em.find(Member.class, 1L);
-            findMember.setName("Modified Name Harry");
-            */
-            /*
-            List<Member> result = em.createQuery("select m from Member m ", Member.class)
-                    .setFirstResult(0)
-                    .setMaxResults(5)
-                    .getResultList();
-            for (Member findOne : result) {
-                System.out.println("Member.name = " + findOne.getName());
-            }
 
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            em.close();
+        List<Member> members = findMember.getTeam().getMembers();
+        for(Member mem : members) {
+            System.out.println("m = " + mem.getUsername());
         }
-        emf.close();
 
-        */
+        tx.commit();
 
     }
 }

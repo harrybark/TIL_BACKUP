@@ -1,4 +1,4 @@
-package hellojpa;
+package hellojpa.일대다.양방향;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +13,8 @@ public class Team {
 
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID")
     private List<Member> members = new ArrayList<>();
 
     public List<Member> getMembers() {

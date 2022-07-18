@@ -1,6 +1,7 @@
 package hellojpa.shop.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Item {
@@ -43,4 +44,5 @@ public class Item {
     public void setStockQuantity(int stockQuantity) {
         this.stockQuantity = stockQuantity;
     }
+
 }

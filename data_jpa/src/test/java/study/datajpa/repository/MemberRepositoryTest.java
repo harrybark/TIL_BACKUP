@@ -89,4 +89,17 @@ class MemberRepositoryTest {
             System.out.println(helloBy);
         }
     }
+
+    @Test
+    public void 네임드쿼리_테스트() throws Exception {
+        // given
+        Member member = new Member("Harry", 20);
+        memberRepository.save(member);
+
+        // when
+        List<Member> findMember = memberRepository.findByUsername("Harry");
+
+        // then
+        assertThat(findMember.get(0).getUsername()).isEqualTo("Harry");
+    }
 }

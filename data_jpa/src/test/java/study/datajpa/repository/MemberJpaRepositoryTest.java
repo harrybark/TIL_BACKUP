@@ -81,4 +81,17 @@ class MemberJpaRepositoryTest {
         assertThat(result.size()).isEqualTo(1);
 
     }
+    
+    @Test
+    public void 네임드쿼리_테스트() throws Exception {
+        // given
+        Member member = new Member("Harry", 20);
+        memberJpaRepository.save(member);
+
+        // when
+        List<Member> findMember = memberJpaRepository.findByUsername("Harry");
+
+        // then
+        assertThat(findMember.get(0).getUsername()).isEqualTo("Harry");
+    }
 }

@@ -21,6 +21,6 @@ public class BaekJoon1001 {
     }
 
     private static int minus(int num1, int num2) {
-        return num1 - num2 ;
+        return num1 - num2;
     }
 }

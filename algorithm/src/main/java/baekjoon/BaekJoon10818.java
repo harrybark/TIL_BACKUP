@@ -16,14 +16,14 @@ public class BaekJoon10818 {
         int max = b;
         int min = b;
 
-        while(st.hasMoreTokens()) {
+        while (st.hasMoreTokens()) {
             int curVal = Integer.parseInt(st.nextToken());
 
-            if ( min > curVal ) {
+            if (min > curVal) {
                 min = curVal;
             }
 
-            if( max < curVal ) {
+            if (max < curVal) {
                 max = curVal;
             }
         }

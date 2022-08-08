@@ -7,8 +7,7 @@ import java.util.StringTokenizer;
 
 public class BaekJoon2869 {
 
-    public static void main(String[] args) throws IOException
-    {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
@@ -18,7 +17,7 @@ public class BaekJoon2869 {
 
         int curLocation = (peak - slide) / (move - slide);
 
-        if((peak - slide) % (move - slide) != 0 ) {
+        if ((peak - slide) % (move - slide) != 0) {
             curLocation++;
         }
         br.close();

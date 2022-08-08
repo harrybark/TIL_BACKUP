@@ -15,11 +15,13 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "orders")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "order_id")
     private Long id;
 
@@ -72,16 +74,17 @@ public class Order {
     }
 
     //==비즈니스 로직==//
+
     /**
      * 주문취소
      */
     public void cancel() {
-        if(delivery.getStatus() == DeliveryStatus.COMP) {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {
             throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
         }
 
         this.setStatus(OrderStatus.CANCEL);
-        for(OrderItem orderItem : this.orderItems ) {
+        for (OrderItem orderItem : this.orderItems) {
             orderItem.cancel();
         }
     }
@@ -90,6 +93,7 @@ public class Order {
 
     /**
      * 전체 주문 가격 조회
+     *
      * @return
      */
     public int getTotalPrice() {

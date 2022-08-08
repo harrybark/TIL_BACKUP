@@ -61,8 +61,8 @@ public class JpaMain {
 
             // new 로 조회
             List<MemberDto> resultList1 = em.createQuery(
-                    "select new jpql.MemberDto(m.username, m.age) from Member m",
-                        MemberDto.class)
+                            "select new jpql.MemberDto(m.username, m.age) from Member m",
+                            MemberDto.class)
                     .getResultList();
 
             em.flush();
@@ -85,7 +85,7 @@ public class JpaMain {
             em.clear();
             // 조인
             String query = "select m from Member m inner join m.team t order by m.age desc";
-            List<Member> joinMember = em.createQuery(query , Member.class)
+            List<Member> joinMember = em.createQuery(query, Member.class)
                     .getResultList();
             System.out.println(joinMember.size());
             System.out.println(joinMember);
@@ -95,14 +95,14 @@ public class JpaMain {
 
             // 세타 조인
             query = "select m from Member m, Team t where m.username = t.name order by m.age desc";
-            List<Member> ceta = em.createQuery(query , Member.class)
+            List<Member> ceta = em.createQuery(query, Member.class)
                     .getResultList();
             System.out.println(ceta.size());
             System.out.println(ceta);
 
             // 1. Join 대상 필터링
             query = "select m from Member m left join m.team t on t.name = 'teamA'";
-            List<Member> joinOn = em.createQuery(query , Member.class)
+            List<Member> joinOn = em.createQuery(query, Member.class)
                     .getResultList();
             System.out.println(joinOn.size());
             System.out.println(joinOn);

@@ -45,7 +45,7 @@ public class FetchMain {
             List<Member> memberList = em.createQuery(query, Member.class).getResultList();
 
             for (Member m : memberList) {
-                System.out.println("member : " + m.getUsername() + ", " + m.getTeam().getName() );
+                System.out.println("member : " + m.getUsername() + ", " + m.getTeam().getName());
             }
 
             // 컬렉션 fetch
@@ -53,8 +53,8 @@ public class FetchMain {
             List<Team> res = em.createQuery(query2, Team.class).getResultList();
 
             for (Team m : res) {
-                System.out.println("member : " + m.getName() + ", " + m.getMembers().size() );
-                for ( Member s : m.getMembers()) {
+                System.out.println("member : " + m.getName() + ", " + m.getMembers().size());
+                for (Member s : m.getMembers()) {
                     System.out.println("-> member : " + s.getUsername() + ", " + s.getAge());
                 }
             }

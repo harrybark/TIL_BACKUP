@@ -22,7 +22,7 @@ public class EmbeddedMember {
 
     @ElementCollection
     @CollectionTable(name = "FAVORITE_FOOD"
-                    , joinColumns = @JoinColumn(name = "MEMBER_ID"))
+            , joinColumns = @JoinColumn(name = "MEMBER_ID"))
     @Column(name = "FOOD_NAME")
     private Set<String> favoriteFoods = new HashSet<>();
 

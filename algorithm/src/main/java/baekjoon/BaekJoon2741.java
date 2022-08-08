@@ -11,7 +11,7 @@ public class BaekJoon2741 {
         int loopCnt = Integer.valueOf(br.readLine());
         StringBuilder sb = new StringBuilder();
         int n = 1;
-        while(loopCnt-- > 0) {
+        while (loopCnt-- > 0) {
             sb.append(n++).append("\n");
         }
         br.close();

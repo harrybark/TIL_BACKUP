@@ -11,18 +11,18 @@ public class BaekJoon8958 {
         StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
 
-        for ( int i = 0 ; i < N; i++ ) {
-            int count = 0 ;
+        for (int i = 0; i < N; i++) {
+            int count = 0;
             int sum = 0;
             String str = br.readLine();
 
-            for( int j = 0 ; j < str.length(); j++ ) {
-                if( str.charAt(j) == 'O' ) {
+            for (int j = 0; j < str.length(); j++) {
+                if (str.charAt(j) == 'O') {
                     count++;
                 } else {
                     count = 0;
                 }
-                sum+=count;
+                sum += count;
             }
             sb.append(sum + "\n");
         }

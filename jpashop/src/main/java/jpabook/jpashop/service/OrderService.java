@@ -22,6 +22,7 @@ public class OrderService {
     private final MemberRepository memberRepository;
 
     private final ItemRepository itemRepository;
+
     /**
      * 주문
      */
@@ -58,5 +59,7 @@ public class OrderService {
     }
 
     // 검색
-    public List<Order> findOrders(OrderSearch orderSearch) {return orderRepository.findAll(orderSearch); }
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return orderRepository.findAll(orderSearch);
+    }
 }

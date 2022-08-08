@@ -20,7 +20,7 @@ public class BaekJoon11022 {
         StringBuilder sb = new StringBuilder();
         int loopCnt = Integer.valueOf(br.readLine());
         StringTokenizer st;
-        for ( int i = 1 ; i <= loopCnt ; i++) {
+        for (int i = 1; i <= loopCnt; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             int num1 = Integer.valueOf(st.nextToken());
             int num2 = Integer.valueOf(st.nextToken());

@@ -37,7 +37,7 @@ public class MemberServiceTest {
         // then
         assertEquals(member, memberRepository.findOne(saveId));
     }
-    
+
     @Test
     public void 중복_회원_예외() throws Exception {
         // given

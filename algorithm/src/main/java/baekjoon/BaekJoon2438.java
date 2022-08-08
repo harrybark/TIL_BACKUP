@@ -18,8 +18,8 @@ public class BaekJoon2438 {
         StringBuilder sb = new StringBuilder();
         int loopCnt = Integer.valueOf(br.readLine());
 
-        for ( int i = 1 ; i <= loopCnt ; i++ ) {
-            for (int j = 1 ; j <= i; j++ ) {
+        for (int i = 1; i <= loopCnt; i++) {
+            for (int j = 1; j <= i; j++) {
                 sb.append("*");
             }
             sb.append("\n");

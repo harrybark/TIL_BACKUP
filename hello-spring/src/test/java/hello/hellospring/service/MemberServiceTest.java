@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MemberServiceTest {
 
-    MemberService service ;
+    MemberService service;
     MemoryMemberRepository memberRepository;
 
     @BeforeEach

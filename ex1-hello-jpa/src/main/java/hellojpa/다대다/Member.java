@@ -21,7 +21,7 @@ public class Member {
     private String username;
 
     @ManyToMany
-    @JoinTable(name = "MEMBER_PRODUCT" )
+    @JoinTable(name = "MEMBER_PRODUCT")
     private List<Product> products = new ArrayList<>();
 
     public Member() {

@@ -11,14 +11,14 @@ public class BaekJoon2581 {
         int endNum = Integer.parseInt(br.readLine());
 
         int sum = 0, min = endNum + 1;
-        for ( int n = startNum ; n <= endNum ; n++ ) {
-            if(isPrime(n)) {
+        for (int n = startNum; n <= endNum; n++) {
+            if (isPrime(n)) {
                 sum += n;
                 min = Math.min(min, n);
             }
         }
 
-        if ( sum > 0 ) {
+        if (sum > 0) {
             System.out.println(sum);
             System.out.println(min);
         } else {
@@ -27,11 +27,11 @@ public class BaekJoon2581 {
     }
 
     private static boolean isPrime(int x) {
-        if ( x == 1 ) {
+        if (x == 1) {
             return false;
         }
-        for ( int i = 2 ; i <= Math.sqrt(x); i+=1 ) {
-            if( x % i == 0) {
+        for (int i = 2; i <= Math.sqrt(x); i += 1) {
+            if (x % i == 0) {
                 return false;
             }
         }

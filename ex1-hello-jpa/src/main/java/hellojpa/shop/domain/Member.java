@@ -13,7 +13,8 @@ import java.util.List;
 )
 public class Member {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "MEMBER_SEQ_GENERATOR")
     @Column(name = "MEMBER_ID")
     private Long id;

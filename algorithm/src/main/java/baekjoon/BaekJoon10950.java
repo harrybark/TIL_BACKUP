@@ -7,7 +7,7 @@ public class BaekJoon10950 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int caseCnt = Integer.parseInt(br.readLine());
-        for ( int i = 0 ; i < caseCnt; i++ ) {
+        for (int i = 0; i < caseCnt; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine(), " ");
             int num1 = Integer.parseInt(st.nextToken());
             int num2 = Integer.parseInt(st.nextToken());

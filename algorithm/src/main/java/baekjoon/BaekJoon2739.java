@@ -10,7 +10,7 @@ public class BaekJoon2739 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int input = Integer.parseInt(br.readLine());
 
-        for ( int i = 1; i < 10; i++) {
+        for (int i = 1; i < 10; i++) {
             System.out.println(input + " * " + i + " = " + (input * i));
         }
     }

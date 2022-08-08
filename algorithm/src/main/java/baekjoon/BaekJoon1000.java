@@ -17,7 +17,7 @@ public class BaekJoon1000 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = br.readLine();
-        StringTokenizer st = new StringTokenizer(input," ");
+        StringTokenizer st = new StringTokenizer(input, " ");
         int a = Integer.parseInt(st.nextToken());
         int b = Integer.parseInt(st.nextToken());
 

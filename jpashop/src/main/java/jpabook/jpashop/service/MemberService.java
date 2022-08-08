@@ -17,7 +17,7 @@ public class MemberService {
 
     /**
      * 회원가입
-      */
+     */
     @Transactional
     public Long join(Member member) {
         validateDuplicatedMember(member);
@@ -28,7 +28,7 @@ public class MemberService {
     private void validateDuplicatedMember(Member member) {
         // Exception
         List<Member> members = memberRepository.findByName(member.getName());
-        if(!members.isEmpty()) {
+        if (!members.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }

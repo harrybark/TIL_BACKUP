@@ -1,4 +1,5 @@
 package baekjoon;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -60,27 +61,27 @@ public class BaekJoon10757 {
         int[] arr2 = new int[max_length + 1];
 
         // 각 배열 초기화 후 역순으로 값 저장
-        for ( int index = input1.length()-1, idx = 0 ; index >= 0; index--, idx++ ) {
+        for (int index = input1.length() - 1, idx = 0; index >= 0; index--, idx++) {
 
             arr1[idx] = input1.charAt(index) - '0';
         }
 
-        for ( int index = input2.length()-1, idx = 0 ; index >= 0; index--, idx++ ) {
+        for (int index = input2.length() - 1, idx = 0; index >= 0; index--, idx++) {
             arr2[idx] = input2.charAt(index) - '0';
         }
 
         // 0부터 합산 시작
-        for ( int index = 0 ; index < max_length; index++ ) {
+        for (int index = 0; index < max_length; index++) {
             int value = arr1[index] + arr2[index];
             arr1[index] = value % 10; // 1의 자리를 해당 자리에 저장
-            arr1[index+1] = arr1[index+1] + (value / 10);
+            arr1[index + 1] = arr1[index + 1] + (value / 10);
         }
 
-        if(arr1[max_length] != 0) {
+        if (arr1[max_length] != 0) {
             System.out.print(arr1[max_length]);
         }
 
-        for(int i = max_length - 1; i >= 0; i--) {
+        for (int i = max_length - 1; i >= 0; i--) {
             System.out.print(arr1[i]);
         }
     }

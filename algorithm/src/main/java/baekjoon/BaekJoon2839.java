@@ -11,13 +11,13 @@ public class BaekJoon2839 {
         br.close();
         int compareNum = plasticBag % 5;
 
-        if ( plasticBag == 4 || plasticBag == 7) {
+        if (plasticBag == 4 || plasticBag == 7) {
             System.out.println(-1);
-        } else if ( compareNum == 0 ) {
+        } else if (compareNum == 0) {
             System.out.println(plasticBag / 5);
-        } else if ( compareNum == 1 || compareNum == 3) {
+        } else if (compareNum == 1 || compareNum == 3) {
             System.out.println((plasticBag / 5) + 1);
-        } else if ( compareNum == 2 || compareNum == 4) {
+        } else if (compareNum == 2 || compareNum == 4) {
             System.out.println((plasticBag / 5) + 2);
         }
     }

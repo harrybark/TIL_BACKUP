@@ -11,15 +11,15 @@ public class BaekJoon2292 {
         // 입력된 숫자
         int input = Integer.parseInt(br.readLine());
 
-        if(input == 1) {
+        if (input == 1) {
             System.out.println(input);
-        }   else {
+        } else {
             int range = 2;
             int count = 1;
-           while ( range <= input) {
-               range = range + ( 6 * (count) ) ;
-               count += 1;
-           }
+            while (range <= input) {
+                range = range + (6 * (count));
+                count += 1;
+            }
 
             System.out.println(count);
         }

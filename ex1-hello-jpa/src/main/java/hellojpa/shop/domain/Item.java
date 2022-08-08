@@ -6,7 +6,8 @@ import java.util.List;
 @Entity
 public class Item {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "ITEM_ID")
     private Long id;
     private String name;

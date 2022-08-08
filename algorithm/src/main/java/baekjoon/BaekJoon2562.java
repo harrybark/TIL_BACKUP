@@ -14,10 +14,10 @@ public class BaekJoon2562 {
         int curIdx = 0;
         int comparedNum;
         String str;
-        while( (str = br.readLine()) != null ) {
+        while ((str = br.readLine()) != null) {
             comparedNum = Integer.valueOf(str);
             curIdx++;
-            if(comparedNum > max) {
+            if (comparedNum > max) {
                 max = comparedNum;
                 maxIdx = curIdx;
             }

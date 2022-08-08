@@ -14,9 +14,9 @@ public class BaekJoon1978 {
 
         String str;
         int count = 0;
-        while ( st.hasMoreElements() ) {
+        while (st.hasMoreElements()) {
             str = st.nextToken();
-            if(isPrime(Integer.parseInt(str))) {
+            if (isPrime(Integer.parseInt(str))) {
                 count += 1;
             }
         }
@@ -24,11 +24,11 @@ public class BaekJoon1978 {
     }
 
     private static boolean isPrime(int x) {
-        if ( x == 1 ) {
+        if (x == 1) {
             return false;
         }
-        for ( int i = 2 ; i <= Math.sqrt(x); i+=1 ) {
-            if( x % i == 0) {
+        for (int i = 2; i <= Math.sqrt(x); i += 1) {
+            if (x % i == 0) {
                 return false;
             }
         }

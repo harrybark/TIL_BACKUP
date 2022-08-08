@@ -22,7 +22,7 @@ public class ItemService {
     }
 
     @Transactional
-    public Item updateItem(Long itemId, Book param ) {
+    public Item updateItem(Long itemId, Book param) {
         Item findItem = itemRepository.findOne(itemId);
         findItem.setPrice(param.getPrice());
         findItem.setName(param.getName());
@@ -30,6 +30,7 @@ public class ItemService {
 
         return findItem;
     }
+
     public List<Item> findItems() {
         return itemRepository.findAll();
     }

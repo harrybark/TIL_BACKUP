@@ -6,7 +6,8 @@ import javax.persistence.*;
 @Table(name = "ADDRESS")
 public class AddressEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     private Address address;

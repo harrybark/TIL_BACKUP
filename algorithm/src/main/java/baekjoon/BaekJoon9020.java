@@ -18,13 +18,13 @@ public class BaekJoon9020 {
         // 소수 false / 소수 X true
         makePrime();
 
-        for ( int loop = 0 ; loop < loopCnt ; loop += 1 ) {
+        for (int loop = 0; loop < loopCnt; loop += 1) {
             int input = Integer.parseInt(br.readLine());
-            int firNum = getPrimeLocation(input/2), resNum = 0;
+            int firNum = getPrimeLocation(input / 2), resNum = 0;
 
-            while ( true ) {
+            while (true) {
                 resNum = input - firNum;
-                if(!prime[firNum] && !prime[resNum] ) {
+                if (!prime[firNum] && !prime[resNum]) {
                     break;
                 } else {
                     firNum -= 1;
@@ -43,9 +43,9 @@ public class BaekJoon9020 {
     private static void makePrime() {
 
         prime[0] = prime[1] = true;
-        for(int i = 2; i <= Math.sqrt(prime.length); i++) {
-            if(prime[i]) continue;
-            for(int j = i * i; j < prime.length; j += i) {
+        for (int i = 2; i <= Math.sqrt(prime.length); i++) {
+            if (prime[i]) continue;
+            for (int j = i * i; j < prime.length; j += i) {
                 prime[j] = true;
             }
         }
@@ -55,13 +55,16 @@ public class BaekJoon9020 {
 
         int rVal = 0;
         // n * 0.5가 소수이면 return
-        if(!prime[n]) {
+        if (!prime[n]) {
             rVal = n;
         }
         // 소수가 아니면 n * 0.5 보다 작은 소수 return
         else {
-            for ( int i = n - 1 ; i > 1 ;i -= 1 ) {
-                if(!prime[i]) { rVal = i; break; }
+            for (int i = n - 1; i > 1; i -= 1) {
+                if (!prime[i]) {
+                    rVal = i;
+                    break;
+                }
             }
         }
 

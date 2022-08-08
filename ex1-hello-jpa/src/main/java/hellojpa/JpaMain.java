@@ -14,7 +14,8 @@ public class JpaMain {
         EntityManager em = emf.createEntityManager();
 
         EntityTransaction tx = em.getTransaction();
-        tx.begin();;
+        tx.begin();
+        ;
 
         Team team = new Team();
         team.setName("TEAMA");
@@ -33,7 +34,7 @@ public class JpaMain {
         System.out.println("findTeam : " + findTeam.getName());
 
         List<Member> members = findMember.getTeam().getMembers();
-        for(Member mem : members) {
+        for (Member mem : members) {
             System.out.println("m = " + mem.getUsername());
         }
 

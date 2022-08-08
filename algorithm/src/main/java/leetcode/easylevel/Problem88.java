@@ -10,8 +10,8 @@ import java.util.Arrays;
  */
 public class Problem88 {
 
-    private static int[] nums1 = {1,2,3,0,0,0};
-    private static int[] nums2 = {2,5,6};
+    private static int[] nums1 = {1, 2, 3, 0, 0, 0};
+    private static int[] nums2 = {2, 5, 6};
     private static int m = 3;
     private static int n = 3;
 
@@ -25,12 +25,12 @@ public class Problem88 {
         int j = n - 1;
         int rtnSize = m + n - 1;
 
-        while(true){
-            if ( j < 0 ) {
+        while (true) {
+            if (j < 0) {
                 break;
             }
 
-            if ( k < 0 || nums1[k] < nums2[j]) {
+            if (k < 0 || nums1[k] < nums2[j]) {
                 nums1[rtnSize--] = nums2[j--];
                 continue;
             }

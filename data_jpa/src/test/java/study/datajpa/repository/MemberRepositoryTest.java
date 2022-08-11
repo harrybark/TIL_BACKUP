@@ -3,6 +3,10 @@ package study.datajpa.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
@@ -165,5 +169,33 @@ class MemberRepositoryTest {
         // then
         System.out.println(findOptional.get());
 
+    }
+
+    @Test
+    public void findByPage() throws Exception {
+        // given
+        memberRepository.save(new Member("member1", 10));
+        memberRepository.save(new Member("member2", 10));
+        memberRepository.save(new Member("member3", 10));
+        memberRepository.save(new Member("member4", 10));
+        memberRepository.save(new Member("member5", 10));
+
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "username"));
+        // when
+        Page<Member> memberPage = memberRepository.findByAge(10, pageRequest);
+
+        Page<MemberDto> toMap = memberPage.map(member -> new MemberDto(member.getId(), member.getUsername(), member.getTeam().getName()));
+        Slice<Member> slicePage = memberRepository.findSliceByAge(10, pageRequest);
+
+        // then
+        List<Member> content = memberPage.getContent();
+        long totalElements = memberPage.getTotalElements();
+
+        assertThat(content.size()).isEqualTo(3);
+        assertThat(memberPage.getTotalElements()).isEqualTo(5);
+        assertThat(memberPage.getNumber()).isEqualTo(0);
+        assertThat(memberPage.getTotalPages()).isEqualTo(2);
+        assertThat(memberPage.isFirst()).isTrue();
+        assertThat(memberPage.hasNext()).isTrue();
     }
 }

@@ -289,4 +289,18 @@ class MemberRepositoryTest {
         // then
 
     }
+
+    @Test
+    public void custom_실행한다() throws Exception {
+        // given
+        List<Member> memberCustom = memberRepository.findMemberCustom();
+
+        // when
+        for (Member member : memberCustom) {
+            System.out.println("member = " + member);
+        }
+
+        // then
+
+    }
 }

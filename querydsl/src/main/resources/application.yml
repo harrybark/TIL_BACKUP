@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/querydsl
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true
+
+logging.level:
+  org.hibernate.SQL: debug
+# 아래 trace를 주석을 해제하면 binding parameter를 확인 할 수는 있음.
+#  org.hibernate.type: trace

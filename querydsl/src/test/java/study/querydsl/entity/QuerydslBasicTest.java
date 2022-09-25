@@ -1,9 +1,12 @@
 package study.querydsl.entity;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
@@ -13,8 +16,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.dto.MemberDto;
+import study.querydsl.dto.QMemberDto;
 import study.querydsl.dto.UserDto;
 
 import javax.persistence.EntityManager;
@@ -714,5 +719,180 @@ class QuerydslBasicTest {
         for (UserDto memberDto : user_dto_projection) {
             System.out.println("user_dto_projection = " + memberDto);
         }
+    }
+
+    @Test
+    public void 쿼리프로젝션() throws Exception {
+        // given
+        
+        // when
+        List<MemberDto> result = queryFactory
+                .select(new QMemberDto(member.username, member.age))
+                .from(member)
+                .fetch();
+
+        // then
+        for (MemberDto memberDto : result) {
+            System.out.println("memberDto : " + memberDto);
+        }
+    }
+    
+    @Test
+    public void 동적쿼리_BooleanBuilder() throws Exception {
+        // given
+        String usernameParam = "member1";
+        Integer ageParam     = 10;
+
+        // when
+        List<Member> result =  searchMemberBooleanBuilder(usernameParam, ageParam);
+
+        // then
+        assertThat(result.size()).isEqualTo(1);
+    }
+
+    private List<Member> searchMemberBooleanBuilder(String usernameParam, Integer ageParam) {
+
+        BooleanBuilder builder = new BooleanBuilder();
+        if ( usernameParam != null ) {
+            builder.and(member.username.eq(usernameParam));
+        }
+
+        if ( ageParam != null ){
+            builder.and(member.age.eq(ageParam));
+        }
+
+        return queryFactory
+                .selectFrom(member)
+                .where(builder)
+                .fetch();
+    }
+    
+    @Test
+    public void 동적쿼리_whereParam() throws Exception {
+        // given
+        String usernameParam = "member1";
+        Integer ageParam     = 10;
+
+        // when
+        List<Member> result =  searchMemberWhereParam(usernameParam, ageParam);
+
+        // then
+        assertThat(result.size()).isEqualTo(1);
+    }
+
+    private List<Member> searchMemberWhereParam(String usernameCond, Integer ageCond) {
+
+        return queryFactory
+                .selectFrom(member)
+                //.where(usernameEq(usernameCond), ageEq(ageCond))
+                .where(AllEq(usernameCond, ageCond))
+                .fetch();
+    }
+
+    private BooleanExpression usernameEq(String usernameCond) {
+            return usernameCond != null ? member.username.eq(usernameCond) : null;
+    }
+
+    private BooleanExpression ageEq(Integer ageCond) {
+        return ageCond != null ? member.age.eq(ageCond) : null;
+    }
+
+    private BooleanExpression AllEq(String usernameCond, Integer ageCond) {
+        return usernameEq(usernameCond).and(ageEq(ageCond));
+    }
+
+    @Test
+    //@Commit
+    public void 벌크_데이터수정() throws Exception {
+        // given
+
+        // when
+        long bulkCount = queryFactory
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(28))
+                .execute();
+
+        em.flush();
+        em.clear();
+
+        // then
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        for (Member member1 : result) {
+            System.out.println("result = " + member1);
+        }
+    }
+
+    @Test
+    public void 벌크_더하기() throws Exception {
+        // given
+
+        // when
+        long count = queryFactory
+                .update(member)
+                .set(member.age, member.age.add(1))
+                .execute();
+
+        // then
+
+    }
+
+    @Test
+    public void 벌크_삭제() throws Exception {
+        // given
+
+        // when
+        long count = queryFactory
+                .delete(member)
+                .where(member.age.gt(18))
+                .execute();
+
+        // then
+    }
+
+    @Test
+    public void SQL_FUNCTION_호출() throws Exception {
+        // given
+
+        // when
+        List<String> result = queryFactory
+                .select(
+                        // 사용중인 DB의 dialect에 등록되어 있는 것만 사용 가능함.
+                        stringTemplate("function('replace', {0}, {1}, {2})"
+                                , member.username
+                                , "member"
+                                , "M"))
+                .from(member)
+                .fetch();
+
+        // then
+        for (String s : result) {
+            System.out.println("s = " + s);
+        }
+    }
+
+    @Test
+    public void SQL_FUNCTION_호출2() throws Exception {
+        // given
+
+        // when
+        List<String> result = queryFactory
+                .select(member.username)
+                .from(member)
+                /*
+                .where(member.username.eq(
+                        stringTemplate("function('lower', {0})", member.username
+                )))
+                */
+                .where(member.username.eq(member.username.lower()))
+                .fetch();
+        // then
+        for (String s : result) {
+            System.out.println("s = " + s );
+        }
+
     }
 }

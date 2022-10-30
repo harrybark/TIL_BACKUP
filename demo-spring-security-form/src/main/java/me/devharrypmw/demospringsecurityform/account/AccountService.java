@@ -21,12 +21,15 @@ public class AccountService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
 
+        /*
         return User
                 .builder()
                 .username(account.getUsername())
                 .password(account.getPassword())
                 .roles(account.getRole(), "USER")
                 .build();
+         */
+        return new UserAccount(account);
     }
 
     public Account createNew(Account account) {

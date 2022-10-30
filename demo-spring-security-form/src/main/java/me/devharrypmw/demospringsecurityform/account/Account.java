@@ -1,11 +1,9 @@
 package me.devharrypmw.demospringsecurityform.account;
 
+import me.devharrypmw.demospringsecurityform.book.Book;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Account {

@@ -1,8 +1,10 @@
 package me.whiteship.demospringdata;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Account {
@@ -11,6 +13,21 @@ public class Account {
     private Long id;
     private String username;
     private String password;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created = new Date();
+
+    @Embedded
+    private Address address;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "home_street"))
+    })
+    private Address homeAddress;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Study> studies = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -34,5 +51,23 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Study> getStudies() {
+        return studies;
+    }
+
+    public void setStudies(Set<Study> studies) {
+        this.studies = studies;
+    }
+
+    public void addStudy(Study study) {
+        this.getStudies().add(study);
+        study.setOwner(this);
+    }
+
+    public void removeStudy(Study study) {
+        this.getStudies().remove(study);
+        study.setOwner(null);
     }
 }

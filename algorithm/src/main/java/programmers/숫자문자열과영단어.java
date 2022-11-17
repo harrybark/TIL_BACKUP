@@ -11,13 +11,7 @@ public class 숫자문자열과영단어 {
             "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
     };
 
-    public static void main(String[] args) {
-        System.out.println(숫자문자열과영단어.solution("one4seveneight"));
-        System.out.println(숫자문자열과영단어.solution("23four5six7"));
-
-    }
-
-    public static int solution(String s) {
+    public int solution(String s) {
 
         String temp = s;
         for(int index = 0 ; index < ALPHA_WORDS.length ; index += 1) {

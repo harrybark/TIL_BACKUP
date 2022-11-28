@@ -5,8 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 @RepositoryDefinition(domainClass = Comment.class, idClass = Long.class)
@@ -25,5 +28,8 @@ public interface CommentRespository extends MyRepository<Comment, Long> {
     Page<Comment> findByCommentContainsIgnoreCase(String keyword, Pageable pageable);
 
     Stream<Comment> findUsingStreamByCommentContainsIgnoreCase(String keyword, Pageable pageable);
+
+    @Async
+    ListenableFuture<List<Comment>> findAsyncUsingStreamByCommentContainsIgnoreCase(String keyword, Pageable pageable);
 
 }

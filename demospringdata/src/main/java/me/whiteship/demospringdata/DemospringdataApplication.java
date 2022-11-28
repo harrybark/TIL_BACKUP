@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.QueryLookupStrategy;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @Import(HarryRegistrator.class)
@@ -13,6 +14,7 @@ import org.springframework.data.repository.query.QueryLookupStrategy;
 @EnableJpaRepositories(queryLookupStrategy = QueryLookupStrategy.Key.CREATE)
 @EnableJpaRepositories(queryLookupStrategy = QueryLookupStrategy.Key.USE_DECLARED_QUERY)
 */
+//@EnableAsync
 public class DemospringdataApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemospringdataApplication.class, args);
